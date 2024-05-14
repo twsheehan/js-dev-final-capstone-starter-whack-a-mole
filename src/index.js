@@ -9,12 +9,24 @@ const moles = document.querySelectorAll(".mole");
 const startButton = document.querySelector("#start");
 const score = document.querySelector("#score");
 const timerDisplay = document.querySelector("#timer");
+const difficultyLevels = document.querySelectorAll("[name='difficulty']");
 
 let time = 0;
 let timer;
 let lastHole = 0;
 let points = 0;
-let difficulty = "hard";
+
+function getDifficulty() {
+  return Array.from(difficultyLevels).filter((level) => level.checked)[0].value;
+}
+
+difficultyLevels.forEach((level) => {
+  level.addEventListener("click", (event) => {
+    difficulty = getDifficulty();
+  });
+});
+
+let difficulty = getDifficulty();
 
 /**
  * Generates a random integer within a range.
@@ -190,7 +202,7 @@ function updateTimer() {
     time--;
     timerDisplay.textContent = time;
     if (time < 4) {
-      console.log("Countdown to game over!");
+      console.log(`Countdown to game over ${time}!`);
       timerDisplay.classList.add("blink");
     }
   }
