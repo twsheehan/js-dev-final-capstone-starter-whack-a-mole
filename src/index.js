@@ -16,10 +16,17 @@ let timer;
 let lastHole = 0;
 let points = 0;
 
+/**
+ *
+ * @returns Selection of difficulty level: 'easy', 'normal', or 'hard'.
+ */
 function getDifficulty() {
   return Array.from(difficultyLevels).filter((level) => level.checked)[0].value;
 }
 
+/**
+ * Add event listeners for each difficulty "level" when clicked.
+ */
 difficultyLevels.forEach((level) => {
   level.addEventListener("click", (event) => {
     difficulty = getDifficulty();
@@ -293,7 +300,7 @@ startButton.addEventListener("click", startGame);
 
 /**
  *
- * @param {*} audioObject media player for playing sounds: audioHit when 'whaked' and background song loop.
+ * @param {*} audioObject media player for playing sounds: audioHit when 'whacked' and background song loop.
  */
 function playAudio(audioObject) {
   audioObject.play();
