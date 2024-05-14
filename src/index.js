@@ -1,3 +1,9 @@
+const audioHit = new Audio(
+  "https://github.com/gabrielsanchez/erddiagram/blob/main/hit.mp3?raw=true"
+);
+const song = new Audio(
+  "https://github.com/gabrielsanchez/erddiagram/blob/main/molesong.mp3?raw=true"
+);
 const holes = document.querySelectorAll(".hole");
 const moles = document.querySelectorAll(".mole");
 const startButton = document.querySelector("#start");
@@ -182,7 +188,14 @@ function clearScore() {
 function updateTimer() {
   if (time > 0) {
     time--;
-    timerDisplay.textContent = String(time);
+    timerDisplay.textContent = time;
+    if (time < 4) {
+      console.log("Countdown to game over!");
+      timerDisplay.classList.add("blink");
+    }
+  }
+  if (time === 0) {
+    timerDisplay.classList.remove("blink");
   }
 
   return time;
@@ -244,7 +257,7 @@ function setDuration(duration) {
  *
  */
 function stopGame() {
-  // stopAudio(song);  //optional
+  stopAudio(song);
   clearInterval(timer);
   return "game stopped";
 }
@@ -256,12 +269,36 @@ function stopGame() {
  *
  */
 function startGame() {
+  clearScore();
   setDuration(10);
   showUp();
+  setEventListeners();
+  startTimer();
   return "game started";
 }
 
 startButton.addEventListener("click", startGame);
+
+/**
+ *
+ * @param {*} audioObject media player for playing sounds: audioHit when 'whaked' and background song loop.
+ */
+function playAudio(audioObject) {
+  audioObject.play();
+}
+
+function loopAudio(audioObject) {
+  audioObject.loop = true;
+  playAudio(audioObject);
+}
+
+function stopAudio(audioObject) {
+  audioObject.pause();
+}
+
+function play() {
+  playAudio(song);
+}
 
 // Please do not modify the code below.
 // Used for testing purposes.
